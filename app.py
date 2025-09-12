@@ -4,7 +4,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 from rag_chain import get_chain
 
 st.set_page_config(page_title="Chatbot", page_icon="🤖", layout="centered")
-st.title("🤖 RAG Chatbot with History")
+st.title("🤖 RAG Chatbot")
 
 # --- Initialize Session State ---
 if "chat_history" not in st.session_state:
