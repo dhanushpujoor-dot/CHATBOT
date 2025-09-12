@@ -23,9 +23,9 @@ def format_history(history):
 
 def get_chain(chat_history):
     #embedding=GoogleGenerativeAIEmbeddings(model='models/embedding-001',api_key=apikey)
-    embedding = HuggingFaceEmbeddings(
-        model_name="BAAI/bge-base-en"   # or "sentence-transformers/all-MiniLM-L6-v2"
-    )
+    # embedding = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en")
+    embedding = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-MiniLM-L12-v2",
+                                      model_kwargs={"device": "cpu"})
 
     vector_store = Chroma(
         embedding_function=embedding,
