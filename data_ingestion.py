@@ -4,10 +4,12 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 # from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
+import shutil
+import os
 
 load_dotenv()
 
-def ingest_data(path="Panchatantra.pdf"):       
+def ingest_data(path):       
     loader = PyPDFLoader(path)
     docs = loader.load()
 
@@ -21,6 +23,15 @@ def ingest_data(path="Panchatantra.pdf"):
     # embedding = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en")
     embedding = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-MiniLM-L12-v2")
 
+    user = input('clear vector db(y/n): ')
+    if user.lower() == 'y':
+        if os.path.exists("chatbot_db"):
+            shutil.rmtree("chatbot_db")
+            print("Chroma DB Cleared")
+        else:
+            print("No DB found to clear.")
+        return
+
     vector_store = Chroma(
         embedding_function=embedding,
         collection_name="sample",
@@ -31,4 +42,4 @@ def ingest_data(path="Panchatantra.pdf"):
     print(f"✅ Ingested {len(chunks)} chunks into Chroma DB")
 
 if __name__ == "__main__":
-    ingest_data("Panchatantra.pdf")
+    ingest_data("dl-curriculum.pdf")
